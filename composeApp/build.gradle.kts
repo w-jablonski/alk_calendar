@@ -116,7 +116,7 @@ compose.desktop {
 tasks.register<Copy>("publishJs") {
     dependsOn("jsBrowserDistribution")
     from("build/dist/js/productionExecutable")
-    into("${rootProject.projectDir}/release/deploy-js")
+    into("${rootProject.projectDir}/docs")
 }
 
 tasks.register<Copy>("publishApk") {
