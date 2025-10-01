@@ -113,6 +113,12 @@ compose.desktop {
     }
 }
 
+tasks.register<Copy>("publishWasm") {
+    dependsOn("wasmJsBrowserDistribution")
+    from("build/dist/wasmJs/productionExecutable")
+    into("${rootProject.projectDir}/docs")
+}
+
 tasks.register<Copy>("publishJs") {
     dependsOn("jsBrowserDistribution")
     from("build/dist/js/productionExecutable")
