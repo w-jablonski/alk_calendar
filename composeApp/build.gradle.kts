@@ -60,8 +60,8 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.calendar.multiplatform)
-            implementation(libs.jetbrains.compose.navigation)
-            implementation(libs.jetbrains.material.icons)
+            implementation(libs.compose.navigation)
+            implementation(libs.material.icons)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
