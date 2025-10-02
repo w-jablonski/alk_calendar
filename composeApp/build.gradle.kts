@@ -119,11 +119,13 @@ tasks.register<Copy>("publishWasm") {
     into("${rootProject.projectDir}/docs")
 }
 
+// less reliable
+/*
 tasks.register<Copy>("publishJs") {
     dependsOn("jsBrowserDistribution")
     from("build/dist/js/productionExecutable")
     into("${rootProject.projectDir}/docs")
-}
+} */
 
 tasks.register<Copy>("publishApk") {
     dependsOn("assembleRelease")
