@@ -1,5 +1,23 @@
 html, body {
     height: 100%;
-    width: 55%;
+    margin: 0;
+    padding: 0;
+    /*display: flex;*/
+    /*justify-content: center;*/
     overflow: hidden;
 }
+
+body {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+    body {
+        max-width: none;
+    }
+}
+
+
+
+
