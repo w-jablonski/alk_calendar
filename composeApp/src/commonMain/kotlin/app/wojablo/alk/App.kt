@@ -6,9 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import app.wojablo.alk.DatabaseDriverFactory
 
 @Composable
-fun App() {
+fun App(driverFactory: DatabaseDriverFactory) {
     // val coroutineScope = rememberCoroutineScope()
     val navController = rememberNavController()
     // val snackbarHostState = remember { SnackbarHostState() }

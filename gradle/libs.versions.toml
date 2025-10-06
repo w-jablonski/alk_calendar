@@ -15,12 +15,16 @@ composeNavigation = "2.9.0"
 kizitonwoseCalendar = "2.9.0"
 kotlin = "2.2.20"
 materialIcons = "1.7.3"
-# sqlDelight = "2.1.0"
+sqlDelight = "2.1.0"
 
 [libraries]
 calendar-multiplatform = { module = "com.kizitonwose.calendar:compose-multiplatform", version.ref = "kizitonwoseCalendar" }
 compose-navigation = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
 material-icons = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "materialIcons" }
+sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqlDelight" }
+sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
+sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqlDelight" }
+sqldelight-web-worker-driver = { module = "app.cash.sqldelight:web-worker-driver", version.ref = "sqlDelight" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -29,7 +33,7 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-# sqldelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 
 
 

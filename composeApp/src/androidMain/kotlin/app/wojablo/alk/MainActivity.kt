@@ -11,7 +11,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            App()
+            App(DatabaseDriverFactory(this))
         }
     }
 }
@@ -19,5 +19,5 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun AppAndroidPreview() {
-    App()
+    App(DatabaseDriverFactory(androidx.compose.ui.platform.LocalContext.current))
 }

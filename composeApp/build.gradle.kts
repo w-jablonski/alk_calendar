@@ -9,13 +9,13 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
-    // alias(libs.plugins.sqldelight)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        outputModuleName = "alk"
+        // outputModuleName = "alk"
         browser {
             commonWebpackConfig {
                 outputFileName = "alkWasm.js"
@@ -25,7 +25,7 @@ kotlin {
     }
 
     js(IR) {
-        outputModuleName = "alk"
+        // outputModuleName = "alk"
         browser {
             commonWebpackConfig {
                 outputFileName = "alkJs.js"
@@ -62,12 +62,20 @@ kotlin {
             implementation(libs.calendar.multiplatform)
             implementation(libs.compose.navigation)
             implementation(libs.material.icons)
+
+            // implementation(libs.sqldelight.coroutines.extensions)
+            implementation(libs.sqldelight.runtime)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(libs.sqldelight.sqlite.driver)
         }
         androidMain.dependencies {
             implementation(compose.preview)
+            implementation(libs.sqldelight.android.driver)
+        }
+        wasmJsMain.dependencies {
+            implementation(libs.sqldelight.web.worker.driver)
         }
     }
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -138,7 +146,6 @@ tasks.register<Copy>("publishApk") {
     }
 }
 
-/*
 sqldelight {
     databases {
         create("CalendarDatabase") {
@@ -147,4 +154,4 @@ sqldelight {
 
         }
     }
-} */
+}
