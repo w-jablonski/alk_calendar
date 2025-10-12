@@ -11,4 +11,4 @@ captures/
 kotlin-js-store/
 node_modules/
 local.properties
-
+.*/

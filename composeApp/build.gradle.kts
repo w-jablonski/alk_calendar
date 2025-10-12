@@ -1,4 +1,3 @@
-
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
@@ -75,7 +74,13 @@ kotlin {
             implementation(libs.sqldelight.android.driver)
         }
         wasmJsMain.dependencies {
-            implementation(libs.sqldelight.web.worker.driver)
+            // implementation(libs.sqldelight.web.worker.driver)
+            implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.1.0"))
+            implementation(npm("sql.js", "1.8.0"))
+        }
+        jsMain.dependencies {
+            implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.1.0"))
+            implementation(npm("sql.js", "1.8.0"))
         }
     }
     @OptIn(ExperimentalKotlinGradlePluginApi::class)

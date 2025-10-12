@@ -9,7 +9,7 @@ targetSdk = "36"
 compileSdk = "36"
 javaLanguage = "17"
 
-composeHotReload = "1.0.0-beta09"
+composeHotReload = "1.0.0-rc02"
 composeMultiplatform = "1.9.0"
 composeNavigation = "2.9.0"
 kizitonwoseCalendar = "2.9.0"
@@ -24,7 +24,7 @@ material-icons = { module = "org.jetbrains.compose.material:material-icons-core"
 sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqlDelight" }
 sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
 sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqlDelight" }
-sqldelight-web-worker-driver = { module = "app.cash.sqldelight:web-worker-driver", version.ref = "sqlDelight" }
+# sqldelight-web-worker-driver = { module = "app.cash.sqldelight:web-worker-driver", version.ref = "sqlDelight" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

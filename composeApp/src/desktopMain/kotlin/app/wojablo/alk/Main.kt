@@ -10,7 +10,7 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         title = "Alk Calendar",
         state = rememberWindowState(
-            width = 380.dp,
+            width = 330.dp,
             height = 600.dp
         )
     ) {

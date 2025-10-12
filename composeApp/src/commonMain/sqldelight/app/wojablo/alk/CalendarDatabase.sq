@@ -1,0 +1,57 @@
+CREATE TABLE IF NOT EXISTS selectedDates (
+    date TEXT PRIMARY KEY,
+    selectionType TEXT NOT NULL DEFAULT 'PRIMARY'
+);
+
+CREATE TABLE IF NOT EXISTS settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL
+);
+
+-- Queries for selected dates
+selectAllDates:
+SELECT date, selectionType FROM selectedDates;
+
+selectDatesByType:
+SELECT date FROM selectedDates WHERE selectionType = ?;
+
+selectDateWithType:
+SELECT date, selectionType FROM selectedDates WHERE date = ?;
+
+insertDate:
+INSERT OR REPLACE INTO selectedDates(date, selectionType) VALUES (?, ?);
+
+deleteDate:
+DELETE FROM selectedDates WHERE date = ?;
+
+deleteAllDates:
+DELETE FROM selectedDates;
+
+-- Create tables
+createSelectedDatesTable:
+CREATE TABLE IF NOT EXISTS selectedDates (
+    date TEXT PRIMARY KEY,
+    selectionType TEXT NOT NULL DEFAULT 'PRIMARY'
+);
+
+createSettingsTable:
+CREATE TABLE IF NOT EXISTS settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL
+);
+
+-- Queries for settings
+selectAllSettings:
+SELECT key, value FROM settings;
+
+selectSettingByKey:
+SELECT value FROM settings WHERE key = ?;
+
+insertSetting:
+INSERT OR REPLACE INTO settings(key, value) VALUES (?, ?);
+
+deleteSetting:
+DELETE FROM settings WHERE key = ?;
+
+deleteAllSettings:
+DELETE FROM settings;
