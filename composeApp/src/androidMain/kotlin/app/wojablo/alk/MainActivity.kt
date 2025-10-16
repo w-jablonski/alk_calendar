@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(isDarkTheme) {
                 window.setBackgroundDrawable(
                     ColorDrawable(
-                        if (isDarkTheme) 0xFF22222.toInt() else 0xFFF5F5F5.toInt()
+                        if (isDarkTheme) 0xFF222222.toInt() else 0xFFF5F5F5.toInt()
                     )
                 )
 
