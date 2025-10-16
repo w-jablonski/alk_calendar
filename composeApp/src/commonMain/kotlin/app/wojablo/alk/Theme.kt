@@ -3,29 +3,34 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
-private val Grey1    = Color(0xFF111111)
-private val Grey2    = Color(0xFF222222)
-private val Grey3    = Color(0xFF333333)
-private val Grey4    = Color(0xFF444444)
-private val Grey5    = Color(0xFF555555)
-private val Grey6    = Color(0xFF666666)
-private val Grey7    = Color(0xFF777777)
-private val Grey8    = Color(0xFF888888)
-private val Grey9    = Color(0xFF999999)
-private val Grey0    = Color(0xFF000000)
-private val GreyA    = Color(0xFFAAAAAA)
-private val GreyB    = Color(0xFFBBBBBB)
-private val GreyC    = Color(0xFFCCCCCC)
-private val GreyD    = Color(0xFFDDDDDD)
-private val GreyE    = Color(0xFFEEEEEE)
-private val Whitish  = Color(0xFFF5F5F5)
+val Grey1    = Color(0xFF111111)
+val Grey2    = Color(0xFF222222)
+val Grey3    = Color(0xFF333333)
+val Grey4    = Color(0xFF444444)
+val Grey5    = Color(0xFF555555)
+val Grey6    = Color(0xFF666666)
+val Grey7    = Color(0xFF777777)
+val Grey8    = Color(0xFF888888)
+val Grey9    = Color(0xFF999999)
+val GreyA    = Color(0xFFAAAAAA)
+val GreyB    = Color(0xFFBBBBBB)
+val GreyC    = Color(0xFFCCCCCC)
+val GreyD    = Color(0xFFDDDDDD)
+val GreyE    = Color(0xFFEEEEEE)
+val Whitish  = Color(0xFFF5F5F5)
 
-private val Azure       = Color(0xFF2196F3)
-private val Red         = Color(0xFFCF0000)
-private val Brown       = Color(0xFF995533)
+val Azure          = Color(0xFF2196F3)
+val Red            = Color(0xFFCF0000)
+val Brown          = Color(0xFF644439)
+val LightBrown     = Color(0xFF956251)
 
-// #995533 #705f58
+
+// #995533 #705f58 #886d63 #643e31 #956251
+// #9F8000 #816317 #674a41 #998077 #644439
 
 private val BrightColorScheme = AppColorScheme(
     background     = Whitish,
@@ -33,11 +38,11 @@ private val BrightColorScheme = AppColorScheme(
     text           = Color.Black,
     icon           = Grey3,
     textOnSelected = Color.White,
-    textAccent     = Color(0xFF705f58),
+    textAccent     = Color(0xFF886d63),
     weekend        = Color(0xFFE0E0E0),
     today          = Color.Black,
-    clicked        = Grey8,
-    selected       = Brown,
+    clicked        = Grey9,
+    selected       = LightBrown,
     shade          = Grey3,
     divider        = GreyC,
 )
@@ -48,10 +53,10 @@ private val DarkColorScheme = AppColorScheme(
     text           = GreyE,
     icon           = GreyC, // Color(0xFFE0E0E0),
     textOnSelected = Color.White,
-    textAccent     = Color(0xFF998377),
+    textAccent     = Color(0xFF998077),
     weekend        = Grey3,
     today          = Color.White,
-    clicked        = Grey7,
+    clicked        = Grey4,
     selected       = Brown,
     shade          = Grey7,
     divider        = Grey3,
@@ -120,6 +125,12 @@ object Colors {
         @Composable get() = LocalAppColors.current.divider
 }
 
+enum class ThemeMode {
+    BRIGHT,
+    DARK,
+    FOLLOW_SYSTEM
+}
+
 @Composable
 fun AppTheme(
     themeMode: ThemeMode = ThemeMode.FOLLOW_SYSTEM,
@@ -133,16 +144,27 @@ fun AppTheme(
 
     val colorScheme = if (isDarkTheme) DarkColorScheme else BrightColorScheme
 
-    CompositionLocalProvider(LocalAppColors provides colorScheme) {
+    CompositionLocalProvider(
+        LocalAppColors provides colorScheme,
+    ) {
         content()
     }
 }
 
-enum class ThemeMode {
-    BRIGHT,
-    DARK,
-    FOLLOW_SYSTEM
+object Sizes {
+    // val topBarHeight = 56.dp
+    val calendarFont = 18.sp
+    val infoFont = 16.sp
 }
+
+/*
+object NoRippleTheme : RippleTheme {
+    @Composable
+    override fun defaultColor() = Color.Unspecified
+
+    @Composable
+    override fun rippleAlpha(): RippleAlpha = RippleAlpha(0f, 0f, 0f, 0f)
+} */
 
 /*
 fun Color.brighten(factor: Float = 0.5f): Color {

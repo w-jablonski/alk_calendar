@@ -54,7 +54,7 @@ fun Day(
 
     val continuousBackgroundColor = when {
         day.position != DayPosition.MonthDate -> Color.Transparent
-        isWeekend -> Colors.weekend
+        ////// isWeekend -> Colors.weekend
         else -> Color.Transparent
     }
 
@@ -62,11 +62,16 @@ fun Day(
         day.position != DayPosition.MonthDate -> Color.Transparent
         isPrimarySelected || isTemporarySelected -> Colors.textOnSelected
         isToday -> Colors.today
-        // isWeekend -> Colors.myDarkGrey
+        isWeekend -> Colors.textAccent //////
         else -> Colors.text
     }
 
-    val fontWeight = if (isToday) FontWeight.Black else FontWeight.Normal
+    val fontWeight = when {
+        isToday -> FontWeight.Black
+        isWeekend -> FontWeight.Medium
+        else -> FontWeight.Normal
+    }
+    // val fontWeight = if (isToday) FontWeight.Black else FontWeight.Normal
     // val fontWeight = FontWeight.Normal // Thin Light Normal Medium SemiBold Bold ExtraBold Black
 
     Box(
@@ -87,11 +92,14 @@ fun Day(
                     enabled = true,
                     onClick = { onClick(day) },
                     onLongClick = { onLongClick(day) },
+                    /*
+                    // This slows down single click badly
                     onDoubleClick = {
                         if (platform() == "desktop") onLongClick(day)
-                    },
+                    }, */
                     // indication = ripple(),
-                    indication = if (showRipple) ripple() else null,
+                    // indication = if (showRipple) ripple() else null,
+                    indication = null,
                     interactionSource = remember { MutableInteractionSource() }
                 ),
             contentAlignment = Alignment.Center,

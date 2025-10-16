@@ -1,7 +1,9 @@
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,7 +20,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import app.wojablo.alk.CalendarDatabase
 import app.wojablo.alk.DatabaseDriverFactory
+import com.kizitonwose.calendar.compose.CalendarState
+import com.kizitonwose.calendar.compose.rememberCalendarState
+import com.kizitonwose.calendar.core.minusMonths
+import com.kizitonwose.calendar.core.now
+import com.kizitonwose.calendar.core.plusMonths
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.YearMonth
 
 @Composable
 fun App(driverFactory: DatabaseDriverFactory) {
@@ -67,9 +78,9 @@ fun App(driverFactory: DatabaseDriverFactory) {
             if (isLoading) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                    // contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator()
+                    // CircularProgressIndicator()
                 }
             } else {
                 val dbHelper = databaseHelper
@@ -80,10 +91,30 @@ fun App(driverFactory: DatabaseDriverFactory) {
                         startDestination = "main"
                     ) {
                         composable("main") {
-                            MainScreen(
+                            val currentMonth = remember { YearMonth.now() }
+                            val startMonth = remember { currentMonth.minusMonths(10000) }
+                            val endMonth = remember { currentMonth.plusMonths(10000) }
+
+                            val calendarState = rememberCalendarState(
+                                startMonth = startMonth,
+                                endMonth = endMonth,
+                                firstVisibleMonth = currentMonth,
+                                firstDayOfWeek = DayOfWeek.MONDAY
+                            )
+
+                            var temporarySelectedDate by remember { mutableStateOf<LocalDate?>(null) }
+                            var highlightedMonth by remember { mutableStateOf<YearMonth?>(null) }
+
+                            MainScreenWithPager(
                                 databaseHelper = dbHelper,
                                 onSettings = { navController.navigate("settings") },
-                                onAddEvent = { navController.navigate("addEvent") }
+                                onAddEvent = { navController.navigate("addEvent") },
+                                calendarState = calendarState,
+                                temporarySelectedDate = temporarySelectedDate,
+                                onTemporaryDateChange = { temporarySelectedDate = it },
+                                highlightedMonth = highlightedMonth,
+                                onHighlightMonth = { month -> highlightedMonth = month },
+                                onHighlightComplete = { highlightedMonth = null }
                             )
                         }
                         composable("settings") {
@@ -107,9 +138,9 @@ fun App(driverFactory: DatabaseDriverFactory) {
                 } else {
                     Box(
                         modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                        // contentAlignment = Alignment.Center
                     ) {
-                        CircularProgressIndicator()
+                        // CircularProgressIndicator()
                     }
                 }
             }
@@ -117,3 +148,80 @@ fun App(driverFactory: DatabaseDriverFactory) {
     }
 }
 
+@Composable
+fun MainScreenWithPager(
+    onSettings: () -> Unit = {},
+    onAddEvent: () -> Unit = {},
+    databaseHelper: DatabaseHelper,
+    calendarState: CalendarState,
+    temporarySelectedDate: LocalDate?,
+    onTemporaryDateChange: (LocalDate?) -> Unit,
+    highlightedMonth: YearMonth?,
+    onHighlightMonth: (YearMonth) -> Unit,
+    onHighlightComplete: () -> Unit
+
+) {
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        // initialPageOffsetFraction = -1f,
+        pageCount = { 2 }
+    )
+    val coroutineScope = rememberCoroutineScope()
+    var showInfoPopup by remember { mutableStateOf(false) }
+    var yearScreenReady by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        delay(100) // let MainScreen render first
+        yearScreenReady = true
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        HorizontalPager(
+            state = pagerState,
+            beyondViewportPageCount = 1,
+            modifier = Modifier.fillMaxSize()
+        ) { page ->
+            when (page) {
+                0 -> MainScreen(
+                    onSettings = onSettings,
+                    onAddEvent = onAddEvent,
+                    databaseHelper = databaseHelper,
+                    calendarState = calendarState,
+                    temporarySelectedDate = temporarySelectedDate,
+                    onTemporaryDateChange = onTemporaryDateChange,
+                    onShowInfo = { showInfoPopup = true },
+                    highlightedMonth = highlightedMonth,
+                    onHighlightComplete = onHighlightComplete,
+                    onHighlightMonth = onHighlightMonth,
+                )
+                1 -> {
+                    if (yearScreenReady) {
+                        YearScreen(
+                            databaseHelper = databaseHelper,
+                            onMonth = { yearMonth ->
+                                onHighlightMonth(yearMonth)
+                                coroutineScope.launch {
+                                    calendarState.scrollToMonth(yearMonth) // animateScrollToMonth
+                                    pagerState.scrollToPage(0) // scrollToPage animateScrollToPage
+                                }
+                            }
+                        )
+                    } else {
+                        Box(
+                            modifier = Modifier
+                            .fillMaxSize()
+                            .background(Colors.background)
+                        )
+                    }
+                }
+            }
+        }
+
+        if (showInfoPopup) {
+            InfoPopup(
+                onDismiss = { showInfoPopup = false },
+                // text = "Long-press a day to remember it"
+            )
+        }
+    }
+}
