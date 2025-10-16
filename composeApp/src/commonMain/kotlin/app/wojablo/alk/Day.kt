@@ -68,6 +68,7 @@ fun Day(
 
     val fontWeight = when {
         isToday -> FontWeight.Black
+        isPrimarySelected || isTemporarySelected -> FontWeight.Normal
         isWeekend -> FontWeight.Medium
         else -> FontWeight.Normal
     }
