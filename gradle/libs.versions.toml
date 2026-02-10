@@ -1,21 +1,21 @@
 [versions]
-agp = "8.13.0"
+agp = "8.13.2"
 
 versionCode = "1"
 versionName = "1.0.0"
 
-minSdk = "21"
+minSdk = "23"
 targetSdk = "36"
 compileSdk = "36"
 javaLanguage = "17"
 
-composeHotReload = "1.0.0-rc02"
-composeMultiplatform = "1.9.0"
-composeNavigation = "2.9.0"
-kizitonwoseCalendar = "2.9.0"
-kotlin = "2.2.20"
+# composeHotReload = "1.0.0"
+composeMultiplatform = "1.10.1"
+composeNavigation = "2.9.2"
+kizitonwoseCalendar = "2.10.0"
+kotlin = "2.3.10"
 materialIcons = "1.7.3"
-sqlDelight = "2.1.0"
+sqlDelight = "2.2.1"
 # androidxComposeBom = "2025.10.00"
 
 [libraries]
@@ -32,7 +32,7 @@ sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", versi
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }
+# composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
